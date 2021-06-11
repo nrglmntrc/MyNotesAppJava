@@ -1,3 +1,32 @@
 <resources>
-    <string name="app_name">MyNotesAppJava</string>
+    <string name="app_name">My Notes</string>
+
+    <string name="welcome1_title">Hadi başlayalım</string>
+    <string name="welcome1_text">Notlarım Uygulamasına Hoşgeldiniz</string>
+
+    <string name="welcome2_title">Notunuzu oluşturun</string>
+    <string name="welcome2_text">Artık notlarınızı unutmadan mobil uygulamanızda saklayabilirsiniz.</string>
+
+    <string name="welcome3_title">Gruba göre listeleyin</string>
+    <string name="welcome3_text">Yapılacak, Yapılıyor ve Tamamlandı olarak notlarınızı gruplandırabilirsiniz.
+</string>
+
+    <string name="next">Next</string>
+
+    <string name="sing_in">Sing In</string>
+    <string name="prompt_email">Email Address</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_password_comfirm">Password (Again)</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="dont_have_account">Don’t have an account? </string>
+    <string name="sing_up">Sign Up</string>
+
+    <string name="prompt_name">Name</string>
+    <string name="prompt_surname">Surname</string>
+    <string name="prompt_phone">Phone Number</string>
+    <string name="user_aggreement">By continuing, you are confirming that
+you accept
+<font color='#EA907A'>User Agreement</font> and its conditions.</string>
+    <string name="have_an_account">Already have an account? </string>
+
 </resources>
