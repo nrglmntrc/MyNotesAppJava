@@ -28,5 +28,9 @@
 you accept
 <font color='#EA907A'>User Agreement</font> and its conditions.</string>
     <string name="have_an_account">Already have an account? </string>
+    <string name="password_length_message">password must be at least 6 characters</string>
+    <string name="fill_message">please do not leave blank</string>
+    <string name="wrong_format">wrong format</string>
+    <string name="password_dont_match">passwords do not match </string>
 
 </resources>
