@@ -20,6 +20,12 @@
         </activity>
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".intro.WelcomeActivity" />
+
+        <provider
+            android:authorities="com.nurgulmantarci.mynotesappjava.noteprovider"
+            android:name=".noteData.NoteProvider"
+            android:exported="false"/>
+
     </application>
 
 </manifest>
