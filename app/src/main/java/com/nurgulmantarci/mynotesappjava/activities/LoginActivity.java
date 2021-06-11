@@ -7,13 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.nurgulmantarci.mynotesappjava.R;
 import com.nurgulmantarci.mynotesappjava.databinding.ActivityLoginBinding;
+import com.nurgulmantarci.mynotesappjava.loginData.LoginDatabaseAdapter;
 
 public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding dataBinding;
+    LoginDatabaseAdapter loginDatabaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,9 @@ public class LoginActivity extends AppCompatActivity {
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        loginDatabaseAdapter = new LoginDatabaseAdapter(getApplicationContext());
+        loginDatabaseAdapter.open();
 
         controlGetIntent();
     }
@@ -62,7 +68,18 @@ public class LoginActivity extends AppCompatActivity {
             dataBinding.editTextPassword.setError(getString(R.string.fill_message));
             dataBinding.editTextPassword.requestFocus();
             return;
-        }else{
+        }else if(!loginDatabaseAdapter.controlEmailIsExist(email)){
+            Toast.makeText(this, "Email kayıtlı değil", Toast.LENGTH_LONG).show();
+            return;
+        }else {
+            String storedEmail=loginDatabaseAdapter.getSingleEntry(password);
+            if(email.equals(storedEmail)){
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }else {
+                Toast.makeText(this, "Şifre hatalı", Toast.LENGTH_LONG).show();
+            }
 
         }
     }
