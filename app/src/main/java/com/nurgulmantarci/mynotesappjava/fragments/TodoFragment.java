@@ -41,8 +41,8 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
     FloatingActionButton fab;
     NoteCursorAdapter adapterNote;
     Cursor cursorNote;
-    ListView listViewNotes;
-    TextView txtNoteAlert;
+    ListView listViewTodoNotes;
+    TextView txtNoteTodoAlert;
 
     public TodoFragment() {
 
@@ -75,15 +75,15 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
             }
         });
 
-        txtNoteAlert=view.findViewById(R.id.txtNoteAlert);
+        txtNoteTodoAlert=view.findViewById(R.id.txtNoteTodoAlert);
 
 
 
         
-        listViewNotes = getActivity().findViewById(R.id.listViewNotes);
+        listViewTodoNotes = getActivity().findViewById(R.id.listViewTodoNotes);
         getLoaderManager().initLoader(100, null, this);
-        adapterNote = new NoteCursorAdapter(context, cursorNote, false,txtNoteAlert);
-        listViewNotes.setAdapter(adapterNote);
+        adapterNote = new NoteCursorAdapter(context, cursorNote, false,txtNoteTodoAlert);
+        listViewTodoNotes.setAdapter(adapterNote);
 
 
     }

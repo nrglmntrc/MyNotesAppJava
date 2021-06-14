@@ -33,8 +33,8 @@ public class DoneFragment extends Fragment implements LoaderManager.LoaderCallba
     FloatingActionButton fab;
     NoteCursorAdapter adapterNote;
     Cursor cursorNote;
-    ListView listViewNotes;
-    TextView txtNoteAlert;
+    ListView listViewDoneNotes;
+    TextView txtNoteDoneAlert;
 
     public DoneFragment() {
 
@@ -67,12 +67,12 @@ public class DoneFragment extends Fragment implements LoaderManager.LoaderCallba
             }
         });
 
-        txtNoteAlert=view.findViewById(R.id.txtNoteAlert);
+        txtNoteDoneAlert=view.findViewById(R.id.txtNoteDoneAlert);
 
-        listViewNotes = getActivity().findViewById(R.id.listViewNotes);
+        listViewDoneNotes = getActivity().findViewById(R.id.listViewDoneNotes);
         getLoaderManager().initLoader(100, null, this);
-        adapterNote = new NoteCursorAdapter(context, cursorNote, false,txtNoteAlert);
-        listViewNotes.setAdapter(adapterNote);
+        adapterNote = new NoteCursorAdapter(context, cursorNote, false,txtNoteDoneAlert);
+        listViewDoneNotes.setAdapter(adapterNote);
 
     }
 

@@ -12,8 +12,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
@@ -22,39 +20,73 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import com.nurgulmantarci.mynotesappjava.R;
-import com.nurgulmantarci.mynotesappjava.databinding.ActivityAddNoteBinding;
+import com.nurgulmantarci.mynotesappjava.databinding.ActivityEditNoteBinding;
 import com.nurgulmantarci.mynotesappjava.helper.UserInformationHelper;
 import com.nurgulmantarci.mynotesappjava.noteData.NoteContract;
-import com.nurgulmantarci.mynotesappjava.noteData.NoteDatabaseHelper;
+import com.nurgulmantarci.mynotesappjava.noteData.NoteContract.CategoryEntry;
 import com.nurgulmantarci.mynotesappjava.noteData.NoteQueryHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class AddNoteActivity extends AppCompatActivity {
+public class EditNoteActivity extends AppCompatActivity {
 
-
-    Bitmap selectedImage;
-    ActivityAddNoteBinding dataBinding;
+    int noteId,categoryId;
+    String noteContent;
+    byte[] image_bytes;
+    Cursor cursorCategory;
+    SimpleCursorAdapter simpleCursorAdapter;
     NoteQueryHandler handler;
+    ActivityEditNoteBinding dataBinding;
+    Bitmap selectedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_note);
+        dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_edit_note);
 
         handler=new NoteQueryHandler(this.getContentResolver());
-        selectedImage=BitmapFactory.decodeResource(getResources(), R.drawable.default_image);
 
+        getIntentData();
+
+        setSpinnerCategory();
+
+        setNoteDetail();
 
     }
 
 
+    private void getIntentData(){
+        noteId=getIntent().getIntExtra("note_id",0);
+        categoryId=getIntent().getIntExtra("category_id",0);
+        image_bytes=getIntent().getByteArrayExtra("image_bytes");
+        noteContent=getIntent().getStringExtra("note_content");
 
+    }
 
-    public void selectImage(View view){
+    private void setSpinnerCategory(){
+        String[] projection={CategoryEntry._ID,CategoryEntry.COLUMN_CATEGORY};
+        cursorCategory=getContentResolver().query(CategoryEntry.CONTENT_URI,projection,null,null,CategoryEntry._ID);  //+" DESC"
+
+        simpleCursorAdapter=new SimpleCursorAdapter(this,android.R.layout.simple_spinner_item,cursorCategory,new String[] {"category"},new int[]{android.R.id.text1},0);
+        simpleCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataBinding.spinnerCategory.setAdapter(simpleCursorAdapter);
+        dataBinding.spinnerCategory.setSelection(categoryId-1);
+
+    }
+
+    private void setNoteDetail(){
+        dataBinding.etNot.setText(noteContent);
+        selectedImage = BitmapFactory.decodeByteArray(image_bytes,0,image_bytes.length);
+        dataBinding.imageView.setImageBitmap(selectedImage);
+
+    }
+
+    public void editImage(View view){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},1);
         } else {
@@ -107,8 +139,8 @@ public class AddNoteActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void btnAddClicked(View view){
 
+    public void btnEditClicked(View view){
 
         String noteTextString = dataBinding.etNot.getText().toString();
         Bitmap smallImage = makeSmallerImage(selectedImage,300);
@@ -118,18 +150,10 @@ public class AddNoteActivity extends AppCompatActivity {
         smallImage.compress(Bitmap.CompressFormat.PNG,50,outputStream);
         byte[] byteArray = outputStream.toByteArray();
 
+        long selectedCategory=dataBinding.spinnerCategory.getSelectedItemId();
+
         try {
 
-//            database = this.openOrCreateDatabase("NotesTable",MODE_PRIVATE,null);
-//            database.execSQL("CREATE TABLE IF NOT EXISTS AddNote (id INTEGER PRIMARY KEY,notetext VARCHAR, email VARCHAR, image BLOB)");
-//
-//
-//            String sqlString = "INSERT INTO AddNote (notetext, email, image) VALUES (?, ?, ?)";
-//            SQLiteStatement sqLiteStatement = database.compileStatement(sqlString);
-//            sqLiteStatement.bindString(1,noteTextString);
-//            sqLiteStatement.bindString(2,userEmail);
-//            sqLiteStatement.bindBlob(3,byteArray);
-//            sqLiteStatement.execute();
 
             ContentValues values=new ContentValues();
             values.put(NoteContract.NotesEntry.COLUMN_NOTE_CONTENT,noteTextString);
@@ -138,8 +162,12 @@ public class AddNoteActivity extends AppCompatActivity {
             values.put(NoteContract.NotesEntry.COLUMN_CREATE_TIME,"13.06.2021");
             values.put(NoteContract.NotesEntry.COLUMN_FINISH_TIME,"13.06.2021");
             values.put(NoteContract.NotesEntry.COLUMN_DONE,0);
-            values.put(NoteContract.NotesEntry.COLUMN_CATEGORY_ID,"1");
-            handler.startInsert(1,null, NoteContract.NotesEntry.CONTENT_URI,values);
+            values.put(NoteContract.NotesEntry.COLUMN_CATEGORY_ID,String.valueOf(selectedCategory));
+
+            String selection= NoteContract.NotesEntry._ID+"=?";
+            String[] args={String.valueOf(noteId)};
+            handler.startUpdate(1,null, NoteContract.NotesEntry.CONTENT_URI,values,selection,args);
+            Toast.makeText(this, noteId+" Nolu Not Güncellendi.", Toast.LENGTH_LONG).show();
 
 
         } catch (Exception e) {
@@ -147,10 +175,11 @@ public class AddNoteActivity extends AppCompatActivity {
         }
 
 
-        Intent intent = new Intent(AddNoteActivity.this,MainActivity.class);
+        Intent intent = new Intent(EditNoteActivity.this,MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
+
     }
 
     public Bitmap makeSmallerImage(Bitmap image, int maximumSize) {
@@ -170,4 +199,5 @@ public class AddNoteActivity extends AppCompatActivity {
 
         return Bitmap.createScaledBitmap(image,width,height,true);
     }
+
 }

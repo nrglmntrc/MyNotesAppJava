@@ -35,5 +35,6 @@
     <string name="dont_have_note">Henüz notunuz yok.</string>
 
     <string name="add_note">Yeni not ekle</string>
+    <string name="edit_note">Notu düzenle</string>
 
 </resources>

@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nurgulmantarci.mynotesappjava">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyNotesAppJava">
-        <activity android:name=".activities.AddNoteActivity"></activity>
+        <activity android:name=".activities.EditNoteActivity"></activity>
+        <activity android:name=".activities.AddNoteActivity" />
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.SplashActivity">
@@ -29,5 +28,7 @@
             android:authorities="com.nurgulmantarci.mynotesappjava.noteprovider"
             android:exported="false" />
     </application>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
