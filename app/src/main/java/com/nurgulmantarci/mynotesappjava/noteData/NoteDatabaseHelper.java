@@ -19,7 +19,9 @@ public class NoteDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_NOTES_CREATE=
             "CREATE TABLE " + NotesEntry.TABLE_NAME + " (" +
                               NotesEntry._ID + " INTEGER PRIMARY KEY," +
-                              NotesEntry.COLUMN_NOTE_CONTENT + " TEXT," + NotesEntry.COLUMN_CREATE_TIME + " TEXT DEFAULT CURRENT_TIMESTAMP, " +
+                              NotesEntry.COLUMN_NOTE_CONTENT + " TEXT," +
+                              NotesEntry.COLUMN_EMAIL + " TEXT," +
+                              NotesEntry.COLUMN_IMAGE + " BLOB," + NotesEntry.COLUMN_CREATE_TIME + " TEXT DEFAULT CURRENT_TIMESTAMP, " +
                               NotesEntry.COLUMN_FINISH_TIME + " TEXT," + NotesEntry.COLUMN_DONE +" INTEGER, " +
                               NotesEntry.COLUMN_CATEGORY_ID + " INTEGER," +
                               " FOREIGN KEY (" + NotesEntry.COLUMN_CATEGORY_ID + ") REFERENCES " + CategoryEntry.TABLE_NAME +"("+CategoryEntry._ID+"))";

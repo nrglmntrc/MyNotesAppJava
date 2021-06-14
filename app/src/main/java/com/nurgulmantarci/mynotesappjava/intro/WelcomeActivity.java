@@ -1,5 +1,6 @@
 package com.nurgulmantarci.mynotesappjava.intro;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -22,6 +24,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.nurgulmantarci.mynotesappjava.R;
 import com.nurgulmantarci.mynotesappjava.activities.LoginActivity;
 import com.nurgulmantarci.mynotesappjava.databinding.ActivityWelcomeBinding;
+import com.nurgulmantarci.mynotesappjava.noteData.NoteContract;
+import com.nurgulmantarci.mynotesappjava.noteData.NoteQueryHandler;
 
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -33,6 +37,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private int[] layouts;
     private WelcomePrefManager prefManager;
     ActivityWelcomeBinding dataBinding;
+    NoteQueryHandler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,8 @@ public class WelcomeActivity extends AppCompatActivity {
             launchHomeScreen();
             finish();
         }
+
+
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -77,10 +84,27 @@ public class WelcomeActivity extends AppCompatActivity {
 
                     viewPager.setCurrentItem(current);
                 } else {
+                    saveNoteCategories();
                     launchHomeScreen();
                 }
             }
         });
+    }
+
+    private void saveNoteCategories(){
+        handler=new NoteQueryHandler(this.getContentResolver());
+
+        ContentValues values=new ContentValues();
+        values.put(NoteContract.CategoryEntry.COLUMN_CATEGORY,"Yapılacak");
+        handler.startInsert(1,null, NoteContract.CategoryEntry.CONTENT_URI,values);
+
+        ContentValues values2=new ContentValues();
+        values2.put(NoteContract.CategoryEntry.COLUMN_CATEGORY,"Yapılıyor");
+        handler.startInsert(1,null, NoteContract.CategoryEntry.CONTENT_URI,values2);
+
+        ContentValues values3=new ContentValues();
+        values3.put(NoteContract.CategoryEntry.COLUMN_CATEGORY,"Tamamlandı");
+        handler.startInsert(1,null, NoteContract.CategoryEntry.CONTENT_URI,values3);
     }
 
     private void addBottomDots(int currentPage) {

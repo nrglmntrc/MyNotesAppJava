@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.nurgulmantarci.mynotesappjava.R;
 import com.nurgulmantarci.mynotesappjava.databinding.ActivityLoginBinding;
+import com.nurgulmantarci.mynotesappjava.helper.UserInformationHelper;
 import com.nurgulmantarci.mynotesappjava.loginData.LoginDatabaseAdapter;
 
 public class LoginActivity extends AppCompatActivity {
@@ -74,6 +75,8 @@ public class LoginActivity extends AppCompatActivity {
         }else {
             String storedEmail=loginDatabaseAdapter.getSingleEntry(password);
             if(email.equals(storedEmail)){
+                UserInformationHelper.saveUserEmail(this,email);
+
                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                 startActivity(intent);
                 finish();

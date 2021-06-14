@@ -18,6 +18,8 @@ public class NoteContract {
         public static final String TABLE_NAME="notes";
         public static final String _ID= BaseColumns._ID;
         public static final String COLUMN_NOTE_CONTENT="note";
+        public static final String COLUMN_IMAGE="image";
+        public static final String COLUMN_EMAIL="email";
         public static final String COLUMN_CREATE_TIME="oluşturulmaTarihi";
         public static final String COLUMN_FINISH_TIME="bitişTarihi";
         public static final String COLUMN_DONE="Yapıldı";

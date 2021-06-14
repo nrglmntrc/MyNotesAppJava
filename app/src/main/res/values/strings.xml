@@ -11,26 +11,27 @@
     <string name="welcome3_text">Yapılacak, Yapılıyor ve Tamamlandı olarak notlarınızı gruplandırabilirsiniz.
 </string>
 
-    <string name="next">Next</string>
+    <string name="next">İleri</string>
 
-    <string name="sing_in">Sing In</string>
-    <string name="prompt_email">Email Address</string>
-    <string name="prompt_password">Password</string>
-    <string name="prompt_password_comfirm">Password (Again)</string>
-    <string name="forgot_password">Forgot Password</string>
-    <string name="dont_have_account">Don’t have an account? </string>
-    <string name="sing_up">Sign Up</string>
+    <string name="sing_in">Giriş Yap</string>
+    <string name="prompt_email">Email Adresi</string>
+    <string name="prompt_password">Şifre</string>
+    <string name="prompt_password_comfirm">Şifre (Tekrar)</string>
+    <string name="forgot_password">Şifremi unuttum</string>
+    <string name="dont_have_account">Hesabınız yok mu? </string>
+    <string name="sing_up">Kayıt ol</string>
+    <string name="save">Kaydet</string>
 
-    <string name="prompt_name">Name</string>
-    <string name="prompt_surname">Surname</string>
-    <string name="prompt_phone">Phone Number</string>
-    <string name="user_aggreement">By continuing, you are confirming that
-you accept
-<font color='#EA907A'>User Agreement</font> and its conditions.</string>
-    <string name="have_an_account">Already have an account? </string>
-    <string name="password_length_message">password must be at least 6 characters</string>
-    <string name="fill_message">please do not leave blank</string>
-    <string name="wrong_format">wrong format</string>
-    <string name="password_dont_match">passwords do not match </string>
+    <string name="prompt_name">İsim</string>
+    <string name="prompt_surname">Soyisim</string>
+    <string name="prompt_phone">Telefon (11 hane)</string>
+    <string name="user_aggreement"><font color='#EA907A'>Gizlilik İlkeleri</font> ni okudum, onaylıyorum</string>
+    <string name="have_an_account">Zetan hesabınız var mı? </string>
+    <string name="password_length_message">Şifre en az 6 karakterden oluşmalı</string>
+    <string name="fill_message">lütfen doldurunuz</string>
+    <string name="wrong_format">yanlış format</string>
+    <string name="password_dont_match">şifreler eşleşmiyor</string>
+
+    <string name="add_note">Yeni not ekle</string>
 
 </resources>

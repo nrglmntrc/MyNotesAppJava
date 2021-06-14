@@ -128,7 +128,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="32dp"
                     android:background="@drawable/btn_fill_oval"
-                    android:fontFamily="@font/baloo_bhai_regular"
                     android:onClick="btnSignInClick"
                     android:text="@string/sing_in"
                     android:textAllCaps="false"

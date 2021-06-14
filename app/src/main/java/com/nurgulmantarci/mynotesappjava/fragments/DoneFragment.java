@@ -2,6 +2,7 @@ package com.nurgulmantarci.mynotesappjava.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nurgulmantarci.mynotesappjava.R;
+import com.nurgulmantarci.mynotesappjava.activities.AddNoteActivity;
 
 
 public class DoneFragment extends Fragment  {
@@ -47,7 +49,8 @@ public class DoneFragment extends Fragment  {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(context, AddNoteActivity.class);
+                startActivity(intent);
             }
         });
 
