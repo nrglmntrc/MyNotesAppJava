@@ -114,10 +114,22 @@
                     android:layout_height="wrap_content"
                     android:text="@string/forgot_password"
                     android:textSize="14sp"
-                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentRight="true"
                     android:layout_below="@+id/textInputPassword"
                     android:layout_marginTop="16dp"
                     android:textColor="@color/my_pink"
+                    />
+
+                <CheckBox
+                    android:id="@+id/chkBeniHatirla"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/remember_me"
+                    android:textColor="@android:color/darker_gray"
+                    style="@style/MyCheckBox"
+                    android:layout_below="@+id/textInputPassword"
+                    android:button="@drawable/check_box_selector"
                     />
 
                 <Button

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.nurgulmantarci.mynotesappjava.R;
 import com.nurgulmantarci.mynotesappjava.databinding.ActivityLoginBinding;
+import com.nurgulmantarci.mynotesappjava.helper.MySharedPref;
 import com.nurgulmantarci.mynotesappjava.helper.UserInformationHelper;
 import com.nurgulmantarci.mynotesappjava.loginData.LoginDatabaseAdapter;
 
@@ -18,6 +19,7 @@ public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding dataBinding;
     LoginDatabaseAdapter loginDatabaseAdapter;
+    MySharedPref mySharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         loginDatabaseAdapter.open();
 
         controlGetIntent();
+
+        controlRememberMe();
     }
 
     private void controlGetIntent(){
@@ -45,6 +49,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private void controlRememberMe(){
+        mySharedPref=new MySharedPref();
+        if (mySharedPref.getValueBoolean(this, "rememberMe")) { //benihatırla işaretlenmiş ise
+            dataBinding.editTextEmail.setText(mySharedPref.getValueString(this, "email"));
+            dataBinding.editTextPassword.setText(mySharedPref.getValueString(this, "password"));
+            dataBinding.chkBeniHatirla.setChecked(mySharedPref.getValueBoolean(this, "rememberMe"));
+        }
     }
 
     public void btnSignInClick(View view){
@@ -77,6 +90,8 @@ public class LoginActivity extends AppCompatActivity {
             if(email.equals(storedEmail)){
                 UserInformationHelper.saveUserEmail(this,email);
 
+                setRememberMeInfo();
+
                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -90,6 +105,18 @@ public class LoginActivity extends AppCompatActivity {
     public void txtSignUpClicked(View view){
         Intent intent = new Intent(this,RegisterActivity.class);
         startActivity(intent);
+    }
+
+    private void setRememberMeInfo(){
+        if (dataBinding.chkBeniHatirla.isChecked()) {
+            mySharedPref.saveString(this, "email", dataBinding.editTextEmail.getText().toString());
+            mySharedPref.saveString(this, "password", dataBinding.editTextPassword.getText().toString());
+
+        } else {
+            mySharedPref.saveString(this, "email", "");
+            mySharedPref.saveString(this,"password","");
+        }
+        mySharedPref.saveBoolean(this, "rememberMe", dataBinding.chkBeniHatirla.isChecked());
     }
 
 }

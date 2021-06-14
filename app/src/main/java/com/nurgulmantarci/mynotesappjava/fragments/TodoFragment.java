@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ import com.nurgulmantarci.mynotesappjava.R;
 import com.nurgulmantarci.mynotesappjava.activities.AddNoteActivity;
 import com.nurgulmantarci.mynotesappjava.activities.MainActivity;
 import com.nurgulmantarci.mynotesappjava.adapters.NoteCursorAdapter;
+import com.nurgulmantarci.mynotesappjava.helper.UserInformationHelper;
 import com.nurgulmantarci.mynotesappjava.noteData.NoteContract.NotesEntry;
 import com.nurgulmantarci.mynotesappjava.noteData.NoteContract.CategoryEntry;
 
@@ -39,8 +41,8 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
     FloatingActionButton fab;
     NoteCursorAdapter adapterNote;
     Cursor cursorNote;
-    private static final int ALL_NOTES = -1;
     ListView listViewNotes;
+    TextView txtNoteAlert;
 
     public TodoFragment() {
 
@@ -73,13 +75,16 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
             }
         });
 
+        txtNoteAlert=view.findViewById(R.id.txtNoteAlert);
 
 
 
+        
         listViewNotes = getActivity().findViewById(R.id.listViewNotes);
         getLoaderManager().initLoader(100, null, this);
-        adapterNote = new NoteCursorAdapter(context, cursorNote, false);
+        adapterNote = new NoteCursorAdapter(context, cursorNote, false,txtNoteAlert);
         listViewNotes.setAdapter(adapterNote);
+
 
     }
 
@@ -87,6 +92,7 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        String email= UserInformationHelper.getUserEmail(getContext());
         if(id==100){
             String[] projection={NotesEntry.TABLE_NAME+"."+NotesEntry._ID,
                     NotesEntry.COLUMN_NOTE_CONTENT,
@@ -94,8 +100,8 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
                     NotesEntry.COLUMN_IMAGE,
                     NotesEntry.COLUMN_CREATE_TIME,NotesEntry.COLUMN_FINISH_TIME,
                     NotesEntry.COLUMN_DONE, NotesEntry.COLUMN_CATEGORY_ID,CategoryEntry.COLUMN_CATEGORY};
-            String selection=NotesEntry.COLUMN_CATEGORY_ID+"=?";
-            String[] selectionArgs={String.valueOf(1)};
+            String selection=NotesEntry.COLUMN_CATEGORY_ID+"=? AND" + NotesEntry.COLUMN_EMAIL+"=? " ;
+            String[] selectionArgs={String.valueOf(1),email};
             return new CursorLoader(context,NotesEntry.CONTENT_URI,projection,selection,selectionArgs,NotesEntry.TABLE_NAME+"."+NotesEntry._ID+" DESC");
         }else{
             return null;

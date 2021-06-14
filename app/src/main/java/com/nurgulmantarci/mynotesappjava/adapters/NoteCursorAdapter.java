@@ -17,8 +17,11 @@ import com.nurgulmantarci.mynotesappjava.noteData.NoteContract;
 
 public class NoteCursorAdapter extends CursorAdapter {
 
-    public NoteCursorAdapter(Context context, Cursor c, boolean autoRequery) {
+    TextView txtAlert;
+
+    public NoteCursorAdapter(Context context, Cursor c, boolean autoRequery, TextView txtAlert) {
         super(context, c, autoRequery);
+        this.txtAlert=txtAlert;
     }
 
     @Override
@@ -27,7 +30,13 @@ public class NoteCursorAdapter extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, Context context, Cursor cursor)
+    {
+
+        if(txtAlert.getVisibility()==View.VISIBLE){
+            txtAlert.setVisibility(View.GONE);
+        }
+
         TextView txtNote=view.findViewById(R.id.txtNote);
         String noteContent=cursor.getString(cursor.getColumnIndex(NoteContract.NotesEntry.COLUMN_NOTE_CONTENT));
         txtNote.setText(noteContent);

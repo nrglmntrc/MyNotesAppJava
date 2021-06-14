@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Notes</string>
+    <string name="app_name">Notlarım</string>
 
     <string name="welcome1_title">Hadi başlayalım</string>
     <string name="welcome1_text">Notlarım Uygulamasına Hoşgeldiniz</string>
@@ -21,6 +21,7 @@
     <string name="dont_have_account">Hesabınız yok mu? </string>
     <string name="sing_up">Kayıt ol</string>
     <string name="save">Kaydet</string>
+    <string name="remember_me">Beni hatırla!</string>
 
     <string name="prompt_name">İsim</string>
     <string name="prompt_surname">Soyisim</string>
@@ -31,6 +32,7 @@
     <string name="fill_message">lütfen doldurunuz</string>
     <string name="wrong_format">yanlış format</string>
     <string name="password_dont_match">şifreler eşleşmiyor</string>
+    <string name="dont_have_note">Henüz notunuz yok.</string>
 
     <string name="add_note">Yeni not ekle</string>
 
