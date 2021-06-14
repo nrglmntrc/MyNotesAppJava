@@ -88,11 +88,12 @@ public class RegisterActivity extends AppCompatActivity {
             dataBinding.editTextPasswordConfirm.requestFocus();
             return;
         }  else if(!dataBinding.chkUserAgreement.isChecked()){
-            Toast.makeText(this, "Check UserAggreemet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Sözleşmeyi onaylayınız", Toast.LENGTH_SHORT).show();
         }else{
 
             loginDatabaseAdapter.insertEntry(password,email);
             Intent intent=new Intent(RegisterActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("email",email);
             intent.putExtra("password",password);
             startActivity(intent);

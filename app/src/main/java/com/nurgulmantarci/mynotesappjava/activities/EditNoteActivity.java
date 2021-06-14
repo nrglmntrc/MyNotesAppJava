@@ -167,7 +167,7 @@ public class EditNoteActivity extends AppCompatActivity {
             String selection= NoteContract.NotesEntry._ID+"=?";
             String[] args={String.valueOf(noteId)};
             handler.startUpdate(1,null, NoteContract.NotesEntry.CONTENT_URI,values,selection,args);
-            Toast.makeText(this, noteId+" Nolu Not Güncellendi.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, " Notunuz Güncellendi", Toast.LENGTH_LONG).show();
 
 
         } catch (Exception e) {
