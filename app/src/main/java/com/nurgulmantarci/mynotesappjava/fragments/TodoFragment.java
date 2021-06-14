@@ -100,7 +100,7 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
                     NotesEntry.COLUMN_IMAGE,
                     NotesEntry.COLUMN_CREATE_TIME,NotesEntry.COLUMN_FINISH_TIME,
                     NotesEntry.COLUMN_DONE, NotesEntry.COLUMN_CATEGORY_ID,CategoryEntry.COLUMN_CATEGORY};
-            String selection=NotesEntry.COLUMN_CATEGORY_ID+"=? AND" + NotesEntry.COLUMN_EMAIL+"=? " ;
+            String selection=NotesEntry.COLUMN_CATEGORY_ID+"=? AND " + NotesEntry.COLUMN_EMAIL+"=? " ;
             String[] selectionArgs={String.valueOf(1),email};
             return new CursorLoader(context,NotesEntry.CONTENT_URI,projection,selection,selectionArgs,NotesEntry.TABLE_NAME+"."+NotesEntry._ID+" DESC");
         }else{

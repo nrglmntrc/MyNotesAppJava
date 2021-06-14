@@ -15,6 +15,8 @@ import com.nurgulmantarci.mynotesappjava.helper.MySharedPref;
 import com.nurgulmantarci.mynotesappjava.helper.UserInformationHelper;
 import com.nurgulmantarci.mynotesappjava.loginData.LoginDatabaseAdapter;
 
+import java.util.ArrayList;
+
 public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding dataBinding;
@@ -31,9 +33,11 @@ public class LoginActivity extends AppCompatActivity {
         loginDatabaseAdapter = new LoginDatabaseAdapter(getApplicationContext());
         loginDatabaseAdapter.open();
 
-        controlGetIntent();
+        mySharedPref=new MySharedPref();
 
         controlRememberMe();
+
+        controlGetIntent();
     }
 
     private void controlGetIntent(){
@@ -52,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void controlRememberMe(){
-        mySharedPref=new MySharedPref();
+
         if (mySharedPref.getValueBoolean(this, "rememberMe")) { //benihatırla işaretlenmiş ise
             dataBinding.editTextEmail.setText(mySharedPref.getValueString(this, "email"));
             dataBinding.editTextPassword.setText(mySharedPref.getValueString(this, "password"));
@@ -86,18 +90,31 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Email kayıtlı değil", Toast.LENGTH_LONG).show();
             return;
         }else {
-            String storedEmail=loginDatabaseAdapter.getSingleEntry(password);
-            if(email.equals(storedEmail)){
-                UserInformationHelper.saveUserEmail(this,email);
+            ArrayList<String> savedMails=loginDatabaseAdapter.getSingleEntry(password);
+            int error_count=0;
+            for(int i=0;i<savedMails.size();i++){
+                if(savedMails.get(i).equals(email)){
+                    UserInformationHelper.saveUserEmail(this,email);
 
-                setRememberMeInfo();
+                    setRememberMeInfo();
 
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
-            }else {
-                Toast.makeText(this, "Şifre hatalı", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    error_count ++;
+                }
             }
+            
+            if(error_count==savedMails.size()){
+                Toast.makeText(this, "Şifre hatalı", Toast.LENGTH_SHORT).show();
+            }
+  //          String storedEmail=loginDatabaseAdapter.getSingleEntry(password);
+//            if(email.equals(storedEmail)){
+//
+//            }else {
+//                Toast.makeText(this, "Şifre hatalı", Toast.LENGTH_LONG).show();
+//            }
 
         }
     }

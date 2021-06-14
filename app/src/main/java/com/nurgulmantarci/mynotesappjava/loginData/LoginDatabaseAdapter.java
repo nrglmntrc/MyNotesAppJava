@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LoginDatabaseAdapter {
@@ -72,18 +73,25 @@ public class LoginDatabaseAdapter {
         }
     }
 
-    public String getSingleEntry(String password)
+    public ArrayList<String> getSingleEntry(String password)
     {
+        ArrayList<String> saved_mails=new ArrayList<>();
         Cursor cursor=db.query("LOGIN", null, " PASSWORD=?", new String[]{password}, null, null, null);
         if(cursor.getCount()<1) // UserName Not Exist
         {
             cursor.close();
-            return "NOT EXIST";
+            saved_mails.add("NOT EXIST");
+            return saved_mails;
         }
-        cursor.moveToFirst();
-        String email= cursor.getString(cursor.getColumnIndex("EMAIL"));
+
+       // cursor.moveToFirst();
+        while(cursor.moveToNext()){
+            String email= cursor.getString(cursor.getColumnIndex("EMAIL"));
+            saved_mails.add(email);
+        }
         cursor.close();
-        return email;
+
+        return saved_mails;
     }
 
 

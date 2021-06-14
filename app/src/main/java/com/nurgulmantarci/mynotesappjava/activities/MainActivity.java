@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.nurgulmantarci.mynotesappjava.R;
 import com.nurgulmantarci.mynotesappjava.adapters.TabLayoutFragmentAdapter;
@@ -14,6 +15,7 @@ import com.nurgulmantarci.mynotesappjava.databinding.ActivityMainBinding;
 import com.nurgulmantarci.mynotesappjava.fragments.DoingFragment;
 import com.nurgulmantarci.mynotesappjava.fragments.DoneFragment;
 import com.nurgulmantarci.mynotesappjava.fragments.TodoFragment;
+import com.nurgulmantarci.mynotesappjava.helper.UserInformationHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,4 +53,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        UserInformationHelper.deleteUserEmail(this);
+    }
 }
